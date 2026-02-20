@@ -4,6 +4,7 @@ import { VT323_400Regular } from '@expo-google-fonts/vt323';
 import { ShareTechMono_400Regular } from '@expo-google-fonts/share-tech-mono';
 import { View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
+import { RaceProvider } from '../contexts/RaceContext';
 
 export default function RootLayout() {
     const [loaded] = useFonts({
@@ -20,15 +21,17 @@ export default function RootLayout() {
     return (
         <View style={{ flex: 1, backgroundColor: '#0B001A' }}>
             <StatusBar hidden={true} />
-            <Stack
-                screenOptions={{
-                    headerShown: false, // Absolutely no default headers
-                    contentStyle: { backgroundColor: '#0B001A' }, // Match void
-                    animation: 'none', // Strictly no smooth transitions
-                }}
-            >
-                <Stack.Screen name="index" />
-            </Stack>
+            <RaceProvider>
+                <Stack
+                    screenOptions={{
+                        headerShown: false, // Absolutely no default headers
+                        contentStyle: { backgroundColor: '#0B001A' }, // Match void
+                        animation: 'none', // Strictly no smooth transitions
+                    }}
+                >
+                    <Stack.Screen name="index" />
+                </Stack>
+            </RaceProvider>
         </View>
     );
 }

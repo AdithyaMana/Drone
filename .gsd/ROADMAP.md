@@ -7,7 +7,7 @@
 - [x] Strict 4px/8px grid system and zero border radius.
 - [x] Custom typography handling (`VT323` and `Share Tech Mono`) with proper cropping/paddings fixes.
 - [x] Retro neon component library (`PixelBlock`, `CyberText`, `KillSwitch`).
-- [ ] Fully functional `expo-router` navigation flow: Lobby -> Scanner -> Telemetry Hud -> Podium.
+- [x] Fully functional `expo-router` navigation flow: Lobby -> Scanner -> Telemetry Hud -> Podium.
 - [ ] Mocked hardware scanning and backend data.
 
 ## Phases
@@ -23,7 +23,7 @@
 **Requirements**: REQ-01, REQ-02, REQ-03
 
 ### Phase 3: Screen Implementations & Navigation
-**Status**: ⬜ Not Started
+**Status**: ✅ Complete
 **Objective**: Develop the main user flow including the `LobbyScreen` (cartridge select), `ScannerScreen` (target switching logic), `TelemetryHudScreen` (monospace timer and checkpoint tracking), and `PodiumScreen` (score breakdown). Connect them with `expo-router`.
 **Requirements**: REQ-04, REQ-05, REQ-06, REQ-07
 
