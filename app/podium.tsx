@@ -5,10 +5,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { PixelBlock } from '../components/PixelBlock';
 import { CyberText } from '../components/CyberText';
 import { useRaceContext } from '../contexts/RaceContext';
+import { formatTimeMs } from '../hooks/useRaceEngine';
 
 export default function PodiumScreen() {
     const router = useRouter();
-    const { resetRaceState } = useRaceContext();
+    const { finalRawTimeMs, finalPenaltiesMs, resetRaceState } = useRaceContext();
 
     const handleRematch = () => {
         resetRaceState();
@@ -20,6 +21,10 @@ export default function PodiumScreen() {
         router.push('/lobby');
     };
 
+    const raw = finalRawTimeMs || 0;
+    const pen = finalPenaltiesMs || 0;
+    const finalScore = raw + pen;
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.header}>
@@ -29,24 +34,32 @@ export default function PodiumScreen() {
             <View style={styles.scoreStack}>
                 <PixelBlock neonColor="#FFFFFF" style={styles.scoreRow}>
                     <CyberText size={24} color="#FFFFFF">RAW TIME</CyberText>
-                    <CyberText type="number" size={32} color="#FFFFFF">02:59.883</CyberText>
+                    <CyberText type="number" size={32} color="#FFFFFF">
+                        {formatTimeMs(raw)}
+                    </CyberText>
                 </PixelBlock>
 
-                <PixelBlock neonColor="#FF00EA" style={styles.scoreRow}>
-                    <CyberText size={24} color="#FF00EA">MISSED GATES (+10s)</CyberText>
-                    <CyberText type="number" size={32} color="#FF00EA">00:10.000</CyberText>
+                <PixelBlock neonColor={pen > 0 ? "#FF00EA" : "#FFFFFF"} style={styles.scoreRow}>
+                    <CyberText size={24} color={pen > 0 ? "#FF00EA" : "#FFFFFF"}>
+                        MISSED GATES (+{pen / 1000}s)
+                    </CyberText>
+                    <CyberText type="number" size={32} color={pen > 0 ? "#FF00EA" : "#FFFFFF"}>
+                        {formatTimeMs(pen)}
+                    </CyberText>
                 </PixelBlock>
 
                 <PixelBlock neonColor="#39FF14" backgroundColor="#001A09" style={styles.finalRow}>
                     <CyberText size={32} color="#39FF14">FINAL SCORE</CyberText>
-                    <CyberText type="number" size={48} color="#39FF14">03:09.883</CyberText>
+                    <CyberText type="number" size={48} color="#39FF14">
+                        {formatTimeMs(finalScore)}
+                    </CyberText>
                 </PixelBlock>
             </View>
 
             <View style={styles.buttonRow}>
                 <TouchableOpacity activeOpacity={0.7} onPress={handleRematch} style={styles.buttonWrapper}>
                     <PixelBlock neonColor="#00F0FF" style={styles.actionButton}>
-                        <CyberText size={24}>REMATCH</CyberText>
+                        <CyberText type="header" size={24}>REMATCH</CyberText>
                     </PixelBlock>
                 </TouchableOpacity>
 
@@ -54,7 +67,7 @@ export default function PodiumScreen() {
 
                 <TouchableOpacity activeOpacity={0.7} onPress={handleStandings} style={styles.buttonWrapper}>
                     <PixelBlock neonColor="#FF00EA" style={styles.actionButton}>
-                        <CyberText size={24}>STANDINGS</CyberText>
+                        <CyberText type="header" size={24}>STANDINGS</CyberText>
                     </PixelBlock>
                 </TouchableOpacity>
             </View>

@@ -1,48 +1,83 @@
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { PixelBlock } from '../components/PixelBlock';
-import { CyberText } from '../components/CyberText';
 import { KillSwitch } from '../components/KillSwitch';
+import { CyberTimerText } from '../components/CyberTimerText';
+import { useRaceEngine, GateState } from '../hooks/useRaceEngine';
+import { useRaceContext } from '../contexts/RaceContext';
 
 export default function TelemetryHudScreen() {
     const router = useRouter();
+    const { selectedCourseId, setRaceResult } = useRaceContext();
+    const { gates, startTimer, stopTimer, markGate, timerTextRef } = useRaceEngine(selectedCourseId);
 
-    // Mocked state: 2 out of 5 checkpoints hit
-    const checkpoints = [
-        { id: 1, hit: true },
-        { id: 2, hit: true },
-        { id: 3, hit: false },
-        { id: 4, hit: false },
-        { id: 5, hit: false },
-    ];
+    useEffect(() => {
+        // Start ticking when HUD mounts!
+        startTimer();
+    }, [startTimer]);
+
+    const handleStop = () => {
+        const { finalRawTimeMs, finalPenaltiesMs } = stopTimer();
+        setRaceResult(finalRawTimeMs, finalPenaltiesMs);
+        router.push('/podium');
+    };
+
+    const handleGateTap = (index: number) => {
+        const currentGate = gates[index];
+        if (!currentGate) return;
+
+        let nextState: GateState = 'pending';
+        if (currentGate.state === 'pending') nextState = 'passed';
+        else if (currentGate.state === 'passed') nextState = 'missed';
+        else nextState = 'passed'; // Toggle loop for mocked hardware
+
+        markGate(index, nextState);
+    };
 
     return (
         <SafeAreaView style={styles.container}>
             {/* Top Checkpoints Row */}
             <View style={styles.checkpointContainer}>
-                {checkpoints.map((cp) => (
-                    <PixelBlock
-                        key={cp.id}
-                        borderWidth={4}
-                        neonColor={cp.hit ? '#39FF14' : '#FFFFFF'}
-                        backgroundColor={cp.hit ? '#39FF14' : '#000000'}
-                        style={styles.checkpointBox}
-                    />
-                ))}
+                {gates.map((g, index) => {
+                    const isPassed = g.state === 'passed';
+                    const isMissed = g.state === 'missed';
+                    return (
+                        <PixelBlock
+                            key={g.gate_id}
+                            borderWidth={4}
+                            neonColor={isPassed ? '#39FF14' : isMissed ? '#FF00EA' : '#FFFFFF'}
+                            backgroundColor={isPassed ? '#39FF14' : isMissed ? '#FF00EA' : '#000000'}
+                            style={styles.checkpointBox}
+                        />
+                    );
+                })}
             </View>
 
             {/* Massive Centered Timer */}
             <View style={styles.timerContainer}>
-                <CyberText type="number" size={88} color="#FFFFFF" neonColor="#39FF14">
-                    02:59.883
-                </CyberText>
+                <CyberTimerText ref={timerTextRef} />
+
+                {/* 
+                  INVISIBLE MOCKED HARDWARE BYPASS:
+                  Allows the user to tap across the screen (left to right) to trigger the 5 checkpoints.
+                */}
+                <View style={[StyleSheet.absoluteFill, styles.overlayGrid]}>
+                    {gates.map((g, index) => (
+                        <TouchableOpacity
+                            key={`bypass-${g.gate_id}`}
+                            style={styles.overlayGridCell}
+                            activeOpacity={0}
+                            onPress={() => handleGateTap(index)}
+                        />
+                    ))}
+                </View>
             </View>
 
             {/* KillSwitch anchored to bottom */}
             <View style={styles.footerContainer}>
-                <KillSwitch onPress={() => router.push('/podium')} />
+                <KillSwitch onPress={handleStop} />
             </View>
         </SafeAreaView>
     );
@@ -69,6 +104,13 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        position: 'relative',
+    },
+    overlayGrid: {
+        flexDirection: 'row',
+    },
+    overlayGridCell: {
+        flex: 1,
     },
     footerContainer: {
         width: '100%',

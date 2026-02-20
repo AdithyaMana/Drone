@@ -8,11 +8,8 @@ import { useRaceContext } from '../contexts/RaceContext';
 
 const { width } = Dimensions.get('window');
 
-const MOCK_COURSES = [
-    { id: 'track-1', name: 'NEON ALLEY', parTime: '01:15.000' },
-    { id: 'track-2', name: 'CYBER CORE', parTime: '00:58.500' },
-    { id: 'track-3', name: 'VOID RUN', parTime: '02:30.250' },
-];
+import { MOCK_COURSES } from '../data/MockDatabase';
+import { formatTimeMs } from '../hooks/useRaceEngine';
 
 export default function LobbyScreen() {
     const router = useRouter();
@@ -37,9 +34,9 @@ export default function LobbyScreen() {
             >
                 {MOCK_COURSES.map((course) => (
                     <TouchableOpacity
-                        key={course.id}
+                        key={course.course_id}
                         activeOpacity={0.7}
-                        onPress={() => handleSelectCourse(course.id)}
+                        onPress={() => handleSelectCourse(course.course_id)}
                         style={styles.cardWrapper}
                     >
                         <PixelBlock neonColor="#FF00EA" style={styles.card}>
@@ -50,7 +47,7 @@ export default function LobbyScreen() {
                                 PAR TIME
                             </CyberText>
                             <CyberText type="number" size={32} color="#FFFFFF">
-                                {course.parTime}
+                                {formatTimeMs(course.par_time_ms)}
                             </CyberText>
                         </PixelBlock>
                     </TouchableOpacity>
