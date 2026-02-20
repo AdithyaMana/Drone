@@ -7,13 +7,13 @@ export interface PixelBlockProps extends ViewProps {
   borderWidth?: number;
 }
 
-export function PixelBlock({ 
-  neonColor = '#00F0FF', 
-  backgroundColor = '#0B001A', 
+export function PixelBlock({
+  neonColor = '#00F0FF',
+  backgroundColor = '#0B001A',
   borderWidth = 4,
-  style, 
-  children, 
-  ...props 
+  style,
+  children,
+  ...props
 }: PixelBlockProps) {
   return (
     <View
@@ -29,6 +29,17 @@ export function PixelBlock({
       ]}
       {...props}
     >
+      {/* Inner Neon Bloom core */}
+      <View
+        style={[
+          styles.innerBloom,
+          {
+            borderColor: neonColor,
+            opacity: 0.8 // Bright inner tube simulation
+          }
+        ]}
+        pointerEvents="none"
+      />
       {children}
     </View>
   );
@@ -41,5 +52,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 1,
     shadowRadius: 0,
     elevation: 0,
+    position: 'relative', // required for absolute inner bloom
+  },
+  innerBloom: {
+    ...StyleSheet.absoluteFillObject,
+    borderWidth: 1,
+    borderRadius: 0,
+    zIndex: 1, // Sit directly on top of background but under children if possible
   }
 });
