@@ -30,6 +30,10 @@ export default function RootLayout() {
                     }}
                 >
                     <Stack.Screen name="index" />
+                    <Stack.Screen name="lobby" />
+                    <Stack.Screen name="scanner" />
+                    <Stack.Screen name="hud" />
+                    <Stack.Screen name="podium" />
                 </Stack>
             </RaceProvider>
         </View>
