@@ -40,10 +40,16 @@ export function useRaceEngine(courseId: string | null) {
         rawTimeMsRef.current = now - startTimeRef.current;
 
         if (timerTextRef.current) {
+            const formattedTime = formatTimeMs(rawTimeMsRef.current);
             // Bypasses React state completely for peak 0-lag string updates 
-            timerTextRef.current.setNativeProps({
-                text: formatTimeMs(rawTimeMsRef.current)
-            });
+            if (typeof timerTextRef.current.setNativeProps === 'function') {
+                timerTextRef.current.setNativeProps({
+                    text: formattedTime
+                });
+            } else {
+                // Fallback for web where setNativeProps might not exist on the ref
+                (timerTextRef.current as any).value = formattedTime;
+            }
         }
         animationFrameRef.current = requestAnimationFrame(tick);
     }, []);
