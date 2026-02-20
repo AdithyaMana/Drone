@@ -9,7 +9,7 @@ export interface PixelBlockProps extends ViewProps {
 
 export function PixelBlock({
   neonColor = '#00F0FF',
-  backgroundColor = '#0B001A',
+  backgroundColor = 'rgba(15, 5, 25, 0.7)',
   borderWidth = 4,
   style,
   children,

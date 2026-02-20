@@ -39,8 +39,8 @@ const styles = StyleSheet.create({
         margin: 0,
         includeFontPadding: false,
         textAlignVertical: 'center',
-        textShadowOffset: { width: 2, height: 2 },
-        textShadowRadius: 0,
+        textShadowOffset: { width: 0, height: 0 },
+        textShadowRadius: 12, // Blurred glow for ambient emission
         textAlign: 'center',
     }
 });

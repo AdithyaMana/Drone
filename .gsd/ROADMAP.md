@@ -27,6 +27,14 @@
 **Objective**: Develop the main user flow including the `LobbyScreen` (cartridge select), `ScannerScreen` (target switching logic), `TelemetryHudScreen` (monospace timer and checkpoint tracking), and `PodiumScreen` (score breakdown). Connect them with `expo-router`.
 **Requirements**: REQ-04, REQ-05, REQ-06, REQ-07
 
+### Phase 3.5: Arcade UI "Juice" & Greebling
+**Status**: ✅ Complete
+**Objective**: Enhance visual fidelity globally using CRT backgrounds, grid nodes, and internal blooms without lag limits.
+
+### Phase 3.6: Aesthetic Overhaul
+**Status**: ✅ Complete
+**Objective**: Develop spatial depth, floor transforms, translucent layered rendering, and intense text glows.
+
 ### Phase 4: Mock Data & Logic Integration
 **Status**: ✅ Complete
 **Objective**: Implement state management and hooks to handle the flow of mock data from tracking/scanning to finish lines, powering the interactions established in Phase 3.
