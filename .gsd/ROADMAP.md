@@ -1,24 +1,24 @@
 # ROADMAP.md
 
-> **Current Phase**: Not started
+> **Current Phase**: Phase 3
 > **Milestone**: v1.0
 
 ## Must-Haves (from SPEC)
-- [ ] Strict 4px/8px grid system and zero border radius.
-- [ ] Custom typography handling (`VT323` and `Share Tech Mono`) with proper cropping/paddings fixes.
-- [ ] Retro neon component library (`PixelBlock`, `CyberText`, `KillSwitch`).
+- [x] Strict 4px/8px grid system and zero border radius.
+- [x] Custom typography handling (`VT323` and `Share Tech Mono`) with proper cropping/paddings fixes.
+- [x] Retro neon component library (`PixelBlock`, `CyberText`, `KillSwitch`).
 - [ ] Fully functional `expo-router` navigation flow: Lobby -> Scanner -> Telemetry Hud -> Podium.
 - [ ] Mocked hardware scanning and backend data.
 
 ## Phases
 
 ### Phase 1: Foundation (Expo Setup & Typography)
-**Status**: ⬜ Not Started
+**Status**: ✅ Complete
 **Objective**: Scaffold the Expo/Expo-Router project, install fonts (`VT323`, `Share Tech Mono`), and configure global styles enforcing the strict grid and specific color palette.
 **Requirements**: REQ-08, REQ-09, REQ-10, REQ-11
 
 ### Phase 2: Foundational Components
-**Status**: ⬜ Not Started
+**Status**: ✅ Complete
 **Objective**: Build the core reusable UI layer: `PixelBlock`, `CyberText`, and `KillSwitch`, perfectly aligned with strictly enforced retro "hard shadow" and typography clipping rules.
 **Requirements**: REQ-01, REQ-02, REQ-03
 
