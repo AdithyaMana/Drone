@@ -17,8 +17,8 @@ export default function PodiumScreen() {
     };
 
     const handleStandings = () => {
-        resetRaceState();
-        router.push('/lobby');
+        // Do NOT reset race state here, we need the course ID for standings filtering
+        router.push('/standings');
     };
 
     const raw = finalRawTimeMs || 0;

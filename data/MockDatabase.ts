@@ -39,3 +39,28 @@ export const MOCK_GATES: Gate[] = [
     { gate_id: 't3-g4', course_id: 'track-3', sequence_order: 4, penalty_weight_ms: 15000 },
     { gate_id: 't3-g5', course_id: 'track-3', sequence_order: 5, penalty_weight_ms: 25000 },
 ];
+
+export interface Score {
+    score_id: string;
+    course_id: string;
+    player_handle: string;
+    total_time_ms: number;
+}
+
+export const MOCK_SCORES: Score[] = [
+    // track-1 scores
+    { score_id: 's1', course_id: 'track-1', player_handle: 'CYB3R_PUNK', total_time_ms: 74500 },
+    { score_id: 's2', course_id: 'track-1', player_handle: 'NEON_RIDER', total_time_ms: 78100 },
+    { score_id: 's3', course_id: 'track-1', player_handle: 'GHOST_0X', total_time_ms: 79250 },
+    { score_id: 's4', course_id: 'track-1', player_handle: 'VOID_WALKER', total_time_ms: 81000 },
+
+    // track-2 scores
+    { score_id: 's5', course_id: 'track-2', player_handle: 'MUTE_CITY', total_time_ms: 57800 },
+    { score_id: 's6', course_id: 'track-2', player_handle: 'R3TR0', total_time_ms: 59100 },
+    { score_id: 's7', course_id: 'track-2', player_handle: 'SYNTH_LORD', total_time_ms: 61500 },
+
+    // track-3 scores
+    { score_id: 's8', course_id: 'track-3', player_handle: 'NULL_BYTE', total_time_ms: 149000 },
+    { score_id: 's9', course_id: 'track-3', player_handle: 'SYSTEM_ERR', total_time_ms: 152000 },
+    { score_id: 's10', course_id: 'track-3', player_handle: 'OVERRIDE', total_time_ms: 155500 },
+];

@@ -37,6 +37,7 @@ export default function RootLayout() {
                         <Stack.Screen name="scanner" />
                         <Stack.Screen name="hud" />
                         <Stack.Screen name="podium" />
+                        <Stack.Screen name="standings" />
                     </Stack>
                     <ScreenGlass />
                 </CyberBackground>

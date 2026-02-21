@@ -42,3 +42,7 @@
 ### Phase 4: Mock Data & Logic Integration
 **Status**: ✅ Complete
 **Objective**: Implement state management and hooks to handle the flow of mock data from tracking/scanning to finish lines, powering the interactions established in Phase 3.
+
+### Phase 4.4: Leaderboard Integration & Game Loop
+**Status**: ✅ Complete
+**Objective**: Close the game loop by adding a fully integrated mock leaderboard, ranking results properly, and finalizing the end-to-end flow from Lobby -> Scanner -> HUD -> Podium -> Standings.
