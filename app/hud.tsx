@@ -6,7 +6,6 @@ import { PixelBlock } from '../components/PixelBlock';
 import { KillSwitch } from '../components/KillSwitch';
 import { CyberTimerText } from '../components/CyberTimerText';
 import { CyberText } from '../components/CyberText';
-import { CyberBackground } from '../components/CyberBackground';
 import { useRaceEngine, GateState } from '../hooks/useRaceEngine';
 import { useRaceContext } from '../contexts/RaceContext';
 
@@ -39,62 +38,60 @@ export default function TelemetryHudScreen() {
     };
 
     return (
-        <CyberBackground>
-            <SafeAreaView style={styles.container}>
-                {/* Top Checkpoints Row */}
-                <View style={styles.checkpointContainer}>
-                    {gates.map((g, index) => {
-                        const isPassed = g.state === 'passed';
-                        const isMissed = g.state === 'missed';
-                        return (
-                            <PixelBlock
-                                key={g.gate_id}
-                                borderWidth={4}
-                                neonColor={isPassed ? '#39FF14' : isMissed ? '#FF00EA' : '#FFFFFF'}
-                                backgroundColor={isPassed ? '#39FF14' : isMissed ? '#FF00EA' : '#000000'}
-                                style={styles.checkpointBox}
-                            />
-                        );
-                    })}
+        <SafeAreaView style={styles.container}>
+            {/* Top Checkpoints Row */}
+            <View style={styles.checkpointContainer}>
+                {gates.map((g, index) => {
+                    const isPassed = g.state === 'passed';
+                    const isMissed = g.state === 'missed';
+                    return (
+                        <PixelBlock
+                            key={g.gate_id}
+                            borderWidth={4}
+                            neonColor={isPassed ? '#39FF14' : isMissed ? '#FF00EA' : '#FFFFFF'}
+                            backgroundColor={isPassed ? '#39FF14' : isMissed ? '#FF00EA' : 'transparent'}
+                            style={styles.checkpointBox}
+                        />
+                    );
+                })}
+            </View>
+
+            {/* Massive Centered Timer & HUD Greebling */}
+            <View style={styles.timerContainer}>
+                {/* Diagnostic Readouts (Absolute positioned around the timer) */}
+                <View style={[styles.diagWrapper, { top: -24, left: -16 }]}>
+                    <CyberText type="number" size={12} color="#006666">UPLINK: SECURE // BATT: 88%</CyberText>
+                </View>
+                <View style={[styles.diagWrapper, { top: -24, right: -16 }]}>
+                    <CyberText type="number" size={12} color="#006666">FREQ: 5.8GHz // LAT: 12ms</CyberText>
                 </View>
 
-                {/* Massive Centered Timer & HUD Greebling */}
-                <View style={styles.timerContainer}>
-                    {/* Diagnostic Readouts (Absolute positioned around the timer) */}
-                    <View style={[styles.diagWrapper, { top: -24, left: -16 }]}>
-                        <CyberText type="number" size={12} color="#006666">UPLINK: SECURE // BATT: 88%</CyberText>
-                    </View>
-                    <View style={[styles.diagWrapper, { top: -24, right: -16 }]}>
-                        <CyberText type="number" size={12} color="#006666">FREQ: 5.8GHz // LAT: 12ms</CyberText>
-                    </View>
+                <CyberTimerText ref={timerTextRef} />
 
-                    <CyberTimerText ref={timerTextRef} />
-
-                    <View style={[styles.diagWrapper, { bottom: -24, left: -16 }]}>
-                        <CyberText type="number" size={12} color="#006666">MEM_ADDR: 0x8F9A2B</CyberText>
-                    </View>
-
-                    {/*
-                      INVISIBLE MOCKED HARDWARE BYPASS:
-                    */}
-                    <View style={[StyleSheet.absoluteFill, styles.overlayGrid]}>
-                        {gates.map((g, index) => (
-                            <TouchableOpacity
-                                key={`bypass-${g.gate_id}`}
-                                style={styles.overlayGridCell}
-                                activeOpacity={0}
-                                onPress={() => handleGateTap(index)}
-                            />
-                        ))}
-                    </View>
+                <View style={[styles.diagWrapper, { bottom: -24, left: -16 }]}>
+                    <CyberText type="number" size={12} color="#006666">MEM_ADDR: 0x8F9A2B</CyberText>
                 </View>
 
-                {/* KillSwitch anchored to bottom */}
-                <View style={styles.footerContainer}>
-                    <KillSwitch onPress={handleStop} />
+                {/*
+                  INVISIBLE MOCKED HARDWARE BYPASS:
+                */}
+                <View style={[StyleSheet.absoluteFill, styles.overlayGrid]}>
+                    {gates.map((g, index) => (
+                        <TouchableOpacity
+                            key={`bypass-${g.gate_id}`}
+                            style={styles.overlayGridCell}
+                            activeOpacity={0}
+                            onPress={() => handleGateTap(index)}
+                        />
+                    ))}
                 </View>
-            </SafeAreaView>
-        </CyberBackground>
+            </View>
+
+            {/* KillSwitch anchored to bottom */}
+            <View style={styles.footerContainer}>
+                <KillSwitch onPress={handleStop} />
+            </View>
+        </SafeAreaView>
     );
 }
 

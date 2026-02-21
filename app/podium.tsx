@@ -78,7 +78,7 @@ export default function PodiumScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#0B001A',
+        backgroundColor: 'transparent',
         padding: 32,
         justifyContent: 'space-between',
     },

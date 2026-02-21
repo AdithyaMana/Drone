@@ -60,7 +60,7 @@ export default function LobbyScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#0B001A',
+        backgroundColor: 'transparent',
     },
     header: {
         padding: 32,

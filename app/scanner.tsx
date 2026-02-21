@@ -48,7 +48,7 @@ export default function ScannerScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#0B001A',
+        backgroundColor: 'transparent',
         padding: 32, // 8px multiplier
         justifyContent: 'center',
         alignItems: 'center',
